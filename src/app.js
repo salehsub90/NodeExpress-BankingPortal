@@ -1,10 +1,9 @@
 const fs = require('fs');
 const path = require('path');
 
-const accountRoutes = require('./routes/accounts.js');
-const servicesRoutes = require('./routes/services.js');
+const accountRoutes = require('./routes/accounts');
+const servicesRoutes = require('./routes/services');
 
-//object destructing
 const { accounts, users, writeJSON } = require('./data');
 
 const express = require('express');
