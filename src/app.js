@@ -24,6 +24,15 @@ app.get('/checking', (req, res) => res.render('account', { account: accounts.che
 app.get('/credit', (req, res) => res.render('account', { account: accounts.credit }));
 app.get('/profile', (req, res) => res.render('profile', { user: users[0] }));
 app.get('/transfer', (rq,res) => res.render('transfer'));
+app.get('/payment', (req,res) => res.render('paymeny', { account: accounts.credit }));
+
+app.post('/payment', (req, res) => {
+    accounts.credit.balance = accounts.credit.balance - req.body.amount;
+    accounts.credit.available = parseInt(req.body.amount, 10) + parseInt(accounts.credit.available);
+    const accountsJSON = JSON.stringify(accounts, null, 4);
+    fs.writeFileSync(path.join(__dirname, 'json/accounts.json'), accountsJSON, 'utf8');
+    res.render('payment', { message: "Payment Successfull", account: accounts.credit });
+});
 
 app.post('/transfer', (req, res) => {
     accounts[req.body.from].balance = accounts[req.body.from].balance - req.body.amount;
